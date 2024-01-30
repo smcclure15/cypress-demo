@@ -49,7 +49,18 @@ describe('demo test for the cypress site', () => {
 
   describe('bonus', () => {
     it('can click Product then Smart Orchestration, then scroll down to Test Analytics and see that the green circle is aorund Test Analytics', () => {
-      // todo
+
+      cy.get('#dropdownProduct').trigger('mouseover')
+      cy.contains('Smart Orchestration').click()
+
+      // no border initially
+      cy.get('a[href="#test_analytics"]').should('have.class', 'border-transparent')
+
+      // scroll well into the "Test Analytics" section
+      cy.contains('Test Suite Analytics').scrollIntoView()
+
+      // green circle around the button
+      cy.get('a[href="#test_analytics"]').should('have.class', 'border-jade-200')
     })
   })
 })
