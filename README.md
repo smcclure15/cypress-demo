@@ -1,4 +1,4 @@
-#Demo Project for Cypress E2E Testing Capabilities
+# Demo Project for Cypress E2E Testing Capabilities
 
 Note that this project does not automatically run any build/test steps and is only for demo purposes.
 
