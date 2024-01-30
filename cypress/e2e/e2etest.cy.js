@@ -17,25 +17,34 @@ describe('demo test for the cypress site', () => {
   })
 
 
-  it('shows "Loved by OSS..." headline', () => {
-    // cy.contains('Loved by OSS, trusted by Enterprise').scrollIntoView()
+  it('displays "Loved by OSS..." headline with weekly downloads', () => {
     cy.contains('Loved by OSS').scrollIntoView()
     cy.contains('Weekly downloads').prev().should('have.text', '5M+')
   })
 
   it('can click on Company and about Cypress', () => {
-    cy.get('#dropdownCompany').click()
-    // this is part of the drop down, need to keep up
-    // or use {force: true} to disable error checking?
-    // cy.contains('About Cypress ').click()
+    // TODO: spec says user can "click" on Company dropdown, but that actually goes directly to the site cypress.io/about-us ; is this intended?
+    cy.get('#dropdownCompany').trigger('mouseover') // "hover"
+    cy.contains('About Cypress').click()
+    cy.url().should('eq', 'https://www.cypress.io/about-us')
   })
 
   it('can click on Install and then on "npm install cypress" and make sure copied text is right', () => {
-    // todo
+    cy.viewport(1024, 750) // needs to be wide enough to show element
+    cy.contains(' Install ').click()
+    cy.contains('npm install cypress').click()
+
+    cy.window().its('navigator.clipboard')
+      .then((clip) => clip.readText())
+      .should('equal', 'npm install cypress --save-dev')
   })
 
   it('can click on "Product" then "visual review"', () => {
-    // todo
+    // TODO: spec says user can "click" on Product dropdown, but that actually goes directly to the site cypress.io/app ; is this intended?
+    cy.get('#dropdownProduct').trigger('mouseover')
+    cy.contains('Visual Reviews').click()
+
+    cy.url().should('eq', 'https://www.cypress.io/cloud')
   })
 
   describe('bonus', () => {
